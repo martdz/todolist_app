@@ -1,0 +1,35 @@
+<% include ./partials/header %>
+		<div class="container_wrap">
+			<h1>To-Do List <i class="fa fa-pencil" aria-hidden="true"></i></h1>
+			
+			<form action="/todos" method="POST">
+                <input id="addtodo" type="text" name="text" placeholder="Add New Todo">
+                <!--<button class="">Add Todo!</button>-->
+            </form>
+			
+			<ul>
+				<% todos.forEach(function(todo){ %>
+				 <% if(currentUser && todo.author.id.equals(currentUser._id)){ %>
+                           <li>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="item_do first col-lg-11 col-md-11 col-sm-11 col-xs-11">  
+                                            <form id="edit_todo" action="/todos/<%= todo._id %>?_method=PUT" method="POST">
+                                                <input class="edit" type="text" name="todo[text]" value="<%= todo.text %>">
+                                            </form>
+                                        </div>
+                                        <div class="item_do second col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                            <form class="delete" action="/todos/<%= todo._id %>?_method=DELETE" method="POST">
+                                                <button class="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                            </form>
+                                        </div>
+                                      
+                                    </div>    
+                                </div>
+                            </li> 
+                     <% } %> 
+                <% }); %>
+			</ul>
+		</div>
+<% include ./partials/footer %>		
+	
